@@ -1,8 +1,8 @@
-public class PlayerControler {
+public class PlayerController {
     private boolean isALive;  //Player Status
     private int score; //Current score
 
-    public PlayerControler() {
+    public PlayerController() {
         this.isALive = true; //Player starts alive
         this.score = 0; //Start score
     }
@@ -12,7 +12,7 @@ public class PlayerControler {
     }
 
     public void killPlayer() {
-        this.isALive = false; //Player status chande
+        this.isALive = false; //Player status Change
     }
 
     //Getter player status

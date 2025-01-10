@@ -63,16 +63,16 @@ public class Wood {
     }
 
     // Checking collision with a player
-    public boolean checkCollision(int playerX, int playerY, boolean playerFacingRight, int playerWidth) {
-        int firstBranchY = treeY - (branches.size() - 1) * segmentHeight; // Position of first wood pice
+    public boolean checkCollision(int playerX, int playerY, boolean playerFacingRight, int playerHeight) {
+        int firstBranchY = treeY; // Branch on the highest segment
 
-        // Checking collision if player is at the same height as a wood piece
-        if (playerY >= firstBranchY && playerY < firstBranchY + segmentHeight) {
-            String branch = branches.get(branches.size() - 1); // First branch
-            if ("left".equals(branch) && playerX < treeX) { // Branch on the left
+        // If player is at the same height as a branch we are checking collision
+        if (playerY + playerHeight > firstBranchY && playerY < firstBranchY + segmentHeight) {
+            String branch = branches.get(0);
+            if ("left".equals(branch) && !playerFacingRight) { // Branch on the left, player looking left
                 return true;
             }
-            if ("right".equals(branch) && playerX + playerWidth > treeX + treeWidth) { // Branch on the right
+            if ("right".equals(branch) && playerFacingRight) { // Branch on the right, player looking right
                 return true;
             }
         }
