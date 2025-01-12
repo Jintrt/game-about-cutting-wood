@@ -1,14 +1,17 @@
-import java.awt.Graphics;
+import java.awt.*;
 
 public class Player {
     private int x, y; // player position
-    private int height = 80;
+    private int width = 35; // Player width
+    private int height = 100; // Player height
     private boolean facingRight; // Direction: Right = true, Left = false
+    private Wood wood; // Reference to the Wood object
 
-    public Player(int StartX, int StartY) {
-        this.x = StartX;
-        this.y = StartY;
-        this.facingRight = false; //initially looks to the right
+    public Player(int startX, int startY, Wood wood) {
+        this.x = startX;
+        this.y = startY;
+        this.facingRight = false; // Initially looks to the left
+        this.wood = wood; // Assign the reference
     }
 
     public int getHeight() { // Getting player height
@@ -16,25 +19,25 @@ public class Player {
     }
 
     public void draw(Graphics g) {
-        //player graphic(Someday I will replace this rectangle with a better model, I promise)
-        if (facingRight) {
-            g.fillRect(x, y, 35, 100); // right side
-        }
-        else {
-            g.fillRect(x, y, 35, 100); // left side
-        }
+        // Drawing the player
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x, y, width, height);
     }
-    public void move(boolean facingRight) {
-        this.facingRight = facingRight;
-        if (facingRight) {
-            x += 30; // move to right
+
+    public void move(boolean toRight) {
+        if (toRight) {
+            x = wood.getTreeX() + wood.getTreeWidth(); // Move to the right side of the tree
+            facingRight = true;
         } else {
-            x -= 30; // move to left
+            x = wood.getTreeX() - width; // Move to the left side of the tree
+            facingRight = false;
         }
     }
+
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
@@ -42,5 +45,4 @@ public class Player {
     public boolean isFacingRight() {
         return facingRight;
     }
-
 }

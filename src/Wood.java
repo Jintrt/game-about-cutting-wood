@@ -24,22 +24,22 @@ public class Wood {
     // Tree and branches drawing
     public void draw(Graphics g) {
         for (int i = 0; i < branches.size(); i++) {
-            int yPosition = treeY - i * segmentHeight;
+            int yPosition = treeY + i * segmentHeight; // Positon Y of a segment
 
             // Tree segment drawing
-            g.setColor(new Color(139, 69, 19)); // Tree colour
+            g.setColor(new Color(139, 69, 19)); // Tree color(Brown)
             g.fillRect(treeX, yPosition, treeWidth, segmentHeight);
 
-            // Branches drawing
-            String side = branches.get(i);
-            g.setColor(Color.GREEN);
-            if ("left".equals(side)) {
-                g.fillRect(treeX - 30, yPosition + segmentHeight / 2 - 5, 30, 10); // Branch on the left
-            } else if ("right".equals(side)) {
-                g.fillRect(treeX + treeWidth, yPosition + segmentHeight / 2 - 5, 30, 10); // Branch on the right
+            // Branch drawing
+            g.setColor(new Color(34, 139, 34)); // Branch color(Green)
+            if ("left".equals(branches.get(i))) {
+                g.fillRect(treeX - 30, yPosition + 15, 30, 10); // Branch on a left
+            } else if ("right".equals(branches.get(i))) {
+                g.fillRect(treeX + treeWidth, yPosition + 15, 30, 10); // Branch on a right
             }
         }
     }
+
 
     // Cutting down the tree
     public void chop() {
@@ -78,4 +78,14 @@ public class Wood {
         }
         return false;
     }
+
+    // Getters
+    public int getTreeX() {
+        return treeX;
+    }
+
+    public int getTreeWidth() {
+        return treeWidth;
+    }
+
 }
