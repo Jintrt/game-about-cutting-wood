@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Player {
     private int x, y; // player position
-    private int width = 35; // Player width
-    private int height = 100; // Player height
+    private int height = 40; // Player height
+    private int width = 25; // Player width
     private boolean facingRight; // Direction: Right = true, Left = false
     private Wood wood; // Reference to the Wood object
 

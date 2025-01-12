@@ -13,7 +13,7 @@ public class GameControl extends JPanel implements KeyListener {
     public GameControl() {
         // Initialization of game elements
         this.terrain = new Terrain(800, 600, 30); // A board with dimensions of 800 by 600 and an initialization time of 30s
-        this.wood = new Wood(400, 100, 8); // Tree on a center of display with 8 segments
+        this.wood = new Wood(400, 600, 8); // Tree on a center of display with 8 segments
         this.player = new Player(370, 500, wood); // Player at the bottom of the board
 
         setFocusable(true);
