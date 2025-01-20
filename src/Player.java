@@ -14,6 +14,10 @@ public class Player {
         this.wood = wood; // Assign the reference
     }
 
+    public void updatePosition(Terrain terrain) {
+        this.y = terrain.getGroundY(); // it is updating player position
+    }
+
     public int getHeight() { // Getting player height
         return this.height;
     }

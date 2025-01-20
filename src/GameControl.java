@@ -24,15 +24,26 @@ public class GameControl extends JPanel implements KeyListener {
         timer.start();
     }
 
+    private void restartGame() {
+        terrain.reset(30); // restart time and score
+        wood = new Wood(400, 600, 8); // New tree
+        player = new Player(370, 500, wood); // New player
+        running = true;
+    }
+
     // Main game loop
     private void gameLoop() {
         if (!running) return;
 
-        if (terrain.isTimeUp() || wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
+        if (wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
             running = false;
-            JOptionPane.showMessageDialog(this, "Unfortunately, you are dead! Score: " + terrain.getScore());
-            System.exit(0);
+            JOptionPane.showMessageDialog(this, "Game Over! Score: " + terrain.getScore());
+            restartGame();
         }
+
+        player.updatePosition(terrain); // check if player is on the ground
+
+        terrain.update();
 
         repaint();
     }

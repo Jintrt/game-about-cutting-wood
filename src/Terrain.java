@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Terrain {
     private int width, height; // Board dimensions
+    private int groundY; // Ground coordinate
     private int score; // Actual score
     private int timeLeft; // Time left in seconds
     private int timerInterval = 1000; // Time interval in milliseconds
@@ -10,6 +11,7 @@ public class Terrain {
     public Terrain(int width, int height, int initialTime) {
         this.width = width;
         this.height = height;
+        this.groundY = height - 50; // 50 pixels above bottom edge
         score = 0;
         this.timeLeft = initialTime;
         this.lastUpdateTime = System.currentTimeMillis();
@@ -53,7 +55,8 @@ public class Terrain {
         lastUpdateTime = System.currentTimeMillis();
     }
 
-    public int getScore() {
-        return score;
-    }
+    public int getScore() { return score; }
+
+    public int getGroundY() { return groundY; }
+
 }
