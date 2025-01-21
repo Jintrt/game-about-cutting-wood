@@ -1,44 +1,53 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GameMenu extends JPanel {
-    private int bestScore = 0;
-    private GameControl gameControl;
+public class GameMenu extends JFrame {
+    private JPanel menuPanel;
 
     public GameMenu() {
-        setLayout(new BorderLayout());
+        setTitle("Menu");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-        JLabel title = new JLabel("game about cutting wood", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 36));
-        add(title, BorderLayout.NORTH);
+        menuPanel = new JPanel();
+        menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
 
-        JButton startButton = new JButton("Start Game");
-        startButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        JLabel title = new JLabel("game about cutting wood");
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton startButton = new JButton("Start");
+        startButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         startButton.addActionListener(e -> startGame());
-        add(startButton, BorderLayout.CENTER);
 
-        JLabel bestScoreLabel = new JLabel("Best Score: " + bestScore, SwingConstants.CENTER);
-        bestScoreLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        add(bestScoreLabel, BorderLayout.SOUTH);
-    }
+        JButton exitButton = new JButton("Leave");
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.addActionListener(e -> System.exit(0));
 
-    public void setBestScore(int score) {
-        bestScore = Math.max(bestScore, score);
+        menuPanel.add(Box.createVerticalGlue());
+        menuPanel.add(title);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        menuPanel.add(startButton);
+        menuPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        menuPanel.add(exitButton);
+        menuPanel.add(Box.createVerticalGlue());
+
+        add(menuPanel);
+
+        setVisible(true);
     }
 
     private void startGame() {
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        frame.remove(this);
-        gameControl = new GameControl(); // Creates new Game
-        frame.add(gameControl);
-        frame.revalidate();
+        getContentPane().remove(menuPanel); // delete menu screen
+        GameControl gameControl = new GameControl();
+        add(gameControl);
+        revalidate(); // refresh window
+        repaint();
+        gameControl.requestFocusInWindow(); // pass focus to game
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("game  about cutting wood");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.add(new GameMenu());
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(GameMenu::new);
     }
 }

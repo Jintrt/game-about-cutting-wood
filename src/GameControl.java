@@ -35,16 +35,14 @@ public class GameControl extends JPanel implements KeyListener {
     private void gameLoop() {
         if (!running) return;
 
-        if (wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
+        if (terrain.isTimeUp() || wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
             running = false;
             JOptionPane.showMessageDialog(this, "Game Over! Score: " + terrain.getScore());
             restartGame();
         }
 
         player.updatePosition(terrain); // check if player is on the ground
-
         terrain.update();
-
         repaint();
     }
 

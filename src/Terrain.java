@@ -11,7 +11,7 @@ public class Terrain {
     public Terrain(int width, int height, int initialTime) {
         this.width = width;
         this.height = height;
-        this.groundY = height - 50; // 50 pixels above bottom edge
+        this.groundY = height - 40; // 40 pixels above bottom edge
         score = 0;
         this.timeLeft = initialTime;
         this.lastUpdateTime = System.currentTimeMillis();
@@ -31,14 +31,17 @@ public class Terrain {
         // Time left
         g.drawString("TimeLeft: " + timeLeft, 10, 60);
     }
-    // Game time actualization
+    // Timer Update
     public void update() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= timerInterval) {
-            timeLeft--;
+            if (timeLeft > 0) { // it prevents from counting down after 0
+                timeLeft--;
+            }
             lastUpdateTime = currentTime;
         }
     }
+
 
     // Adding points
     public void addScore(int points) {
