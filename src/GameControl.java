@@ -25,7 +25,7 @@ public class GameControl extends JPanel implements KeyListener {
     }
 
     private void restartGame() {
-        terrain.reset(30); // restart time and score
+        terrain.reset(15); // restart time and score
         wood = new Wood(400, 600, 8); // New tree
         player = new Player(370, 500, wood); // New player
         running = true;
@@ -35,16 +35,47 @@ public class GameControl extends JPanel implements KeyListener {
     private void gameLoop() {
         if (!running) return;
 
-        if (terrain.isTimeUp() || wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
-            running = false;
-            JOptionPane.showMessageDialog(this, "Game Over! Score: " + terrain.getScore());
-            restartGame();
+        // checking if time is up
+        if (terrain.isTimeUp()) {
+            endGame("Time is Up! Score: " + terrain.getScore());
+            return;
         }
 
-        player.updatePosition(terrain); // check if player is on the ground
-        terrain.update();
+        // checking if player touched branch
+        if (wood.checkCollision(player.getX(), player.getY(), player.isFacingRight(), player.getHeight())) {
+            endGame("you were hit by branch! score: " + terrain.getScore());
+            return;
+        }
+
+        // refresh elements
+        terrain.update(); // clock update
         repaint();
     }
+
+    private void returnToMainMenu() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this); // Download upper window
+        frame.getContentPane().removeAll(); //Delete current panel (GameControl)
+
+        GameMenu gameMenu = new GameMenu();
+        frame.add(gameMenu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    // endGame method
+    private void endGame(String message) {
+        running = false;
+        JOptionPane.showMessageDialog(this, "Unfortunately, you are dead! Score: " + terrain.getScore());
+
+        // Close current window
+        SwingUtilities.getWindowAncestor(this).dispose();
+
+        // Game menu comback option
+        GameMenu mainMenu = new GameMenu();
+        mainMenu.setVisible(true);
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -62,10 +93,12 @@ public class GameControl extends JPanel implements KeyListener {
             player.move(false); // Move left
             wood.chop(); // Cutting down tree
             terrain.addScore(1); // Adding a point
+            terrain.addTime(1); // adding time
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.move(true); // Move right
             wood.chop(); // Cutting down tree
             terrain.addScore(1);
+            terrain.addTime(1); // adding time
         }
     }
 

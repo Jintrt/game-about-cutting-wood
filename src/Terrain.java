@@ -47,6 +47,7 @@ public class Terrain {
     public void addScore(int points) {
         score += points;
     }
+    public void addTime(int seconds) {timeLeft = Math.min(timeLeft + seconds, 10);} // Limit to a maximum of 10 seconds
     public boolean isTimeUp() {
         return timeLeft <= 0;
     }

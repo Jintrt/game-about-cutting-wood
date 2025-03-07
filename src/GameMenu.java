@@ -6,7 +6,7 @@ public class GameMenu extends JFrame {
 
     public GameMenu() {
         setTitle("Menu");
-        setSize(800, 600);
+        setSize(800, 625);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

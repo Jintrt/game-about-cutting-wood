@@ -9,7 +9,7 @@ public class Player {
 
     public Player(int startX, int startY, Wood wood) {
         this.x = startX;
-        this.y = startY;
+        this.y = 560;
         this.facingRight = false; // Initially looks to the left
         this.wood = wood; // Assign the reference
     }
