@@ -1,32 +1,55 @@
 public class PlayerController {
-    private boolean isALive;  //Player Status
-    private int score; //Current score
+    private boolean isAlive; // Stores the player's current status (alive or dead)
+    private int score; // Stores the player's current score
 
+    /**
+     * Constructor for the PlayerController class.
+     * Initializes the player as alive and sets the score to zero.
+     */
     public PlayerController() {
-        this.isALive = true; //Player starts alive
-        this.score = 0; //Start score
+        this.isAlive = true; // Player starts the game alive
+        this.score = 0; // Score starts at 0
     }
 
+    /**
+     * Increments the player's score by 1.
+     */
     public void incrementScore() {
-        this.score += 1; //Score change method
+        this.score += 1; // Increase score when the player successfully chops the tree
     }
 
+    /**
+     * Changes the player's status to dead.
+     * This is called when the player collides with a branch or runs out of time.
+     */
     public void killPlayer() {
-        this.isALive = false; //Player status Change
+        this.isAlive = false; // Player is marked as dead
     }
 
-    //Getter player status
-    public boolean isALive() {
-        return isALive; //
+    /**
+     * Checks if the player is still alive.
+     *
+     * @return true if the player is alive, false if they are dead.
+     */
+    public boolean isAlive() {
+        return isAlive;
     }
-    //Getter score status
+
+    /**
+     * Retrieves the player's current score.
+     *
+     * @return The player's score.
+     */
     public int getScore() {
         return score;
     }
-    //game restart
-    public void restartGame() {
-        this.isALive = true;
-        this.score = 0;
-    }
 
+    /**
+     * Resets the player's state when restarting the game.
+     * The player is marked as alive and the score is reset to zero.
+     */
+    public void restartGame() {
+        this.isAlive = true; // Reset player to alive
+        this.score = 0; // Reset score to 0
+    }
 }

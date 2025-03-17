@@ -1,66 +1,116 @@
 import java.awt.*;
 
 public class Terrain {
-    private int width, height; // Board dimensions
-    private int groundY; // Ground coordinate
-    private int score; // Actual score
-    private int timeLeft; // Time left in seconds
-    private int timerInterval = 1000; // Time interval in milliseconds
-    private long lastUpdateTime; // Last update time
+    private int width, height; // Dimensions of the game area
+    private int groundY; // Y-coordinate of the ground level
+    private int score; // Current game score
+    private int timeLeft; // Remaining time in seconds
+    private int timerInterval = 1000; // Time update interval (in milliseconds)
+    private long lastUpdateTime; // Stores the last time the timer was updated
 
+    /**
+     * Constructor for the Terrain class.
+     * Initializes the game board dimensions, ground position, score, and timer.
+     *
+     * @param width Width of the game area
+     * @param height Height of the game area
+     * @param initialTime Initial time available for the player (in seconds)
+     */
     public Terrain(int width, int height, int initialTime) {
         this.width = width;
         this.height = height;
-        this.groundY = height - 40; // 40 pixels above bottom edge
+        this.groundY = height - 40; // The ground is set 40 pixels above the bottom of the screen
         score = 0;
-        this.timeLeft = initialTime;
-        this.lastUpdateTime = System.currentTimeMillis();
+        this.timeLeft = initialTime; // Set the initial time limit
+        this.lastUpdateTime = System.currentTimeMillis(); // Store the current time as the last update time
     }
 
-    // Background, score, time drawing
+    /**
+     * Draws the background, score, and time display.
+     *
+     * @param g The Graphics object used for drawing
+     */
     public void draw(Graphics g) {
-        //Background
-        g.setColor(new Color(135, 206, 250)); // Light-blue
+        // Draw background color (light blue)
+        g.setColor(new Color(135, 206, 250));
         g.fillRect(0, 0, width, height);
 
-        // score
+        // Draw the score
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
-        g.drawString("Score: " + score,10, 20);
+        g.drawString("Score: " + score, 10, 20);
 
-        // Time left
-        g.drawString("TimeLeft: " + timeLeft, 10, 60);
+        // Draw the remaining time
+        g.drawString("Time Left: " + timeLeft, 10, 60);
     }
-    // Timer Update
+
+    /**
+     * Updates the timer by decreasing the remaining time every second.
+     */
     public void update() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastUpdateTime >= timerInterval) {
-            if (timeLeft > 0) { // it prevents from counting down after 0
-                timeLeft--;
+        if (currentTime - lastUpdateTime >= timerInterval) { // If one second has passed
+            if (timeLeft > 0) { // Prevents negative time values
+                timeLeft--; // Reduce remaining time
             }
-            lastUpdateTime = currentTime;
+            lastUpdateTime = currentTime; // Update the last recorded time
         }
     }
 
-
-    // Adding points
+    /**
+     * Increases the player's score by a given number of points.
+     *
+     * @param points The number of points to add
+     */
     public void addScore(int points) {
         score += points;
     }
-    public void addTime(int seconds) {timeLeft = Math.min(timeLeft + seconds, 10);} // Limit to a maximum of 10 seconds
+
+    /**
+     * Adds extra time to the player's remaining time, with a maximum limit of 10 seconds.
+     *
+     * @param seconds The number of extra seconds to add
+     */
+    public void addTime(int seconds) {
+        timeLeft = Math.min(timeLeft + seconds, 10); // Ensures time never exceeds 10 seconds
+    }
+
+    /**
+     * Checks if the game time has run out.
+     *
+     * @return true if timeLeft is 0 or below, false otherwise
+     */
     public boolean isTimeUp() {
         return timeLeft <= 0;
     }
 
-    // Restarting game
+    /**
+     * Resets the game state, including score and time.
+     *
+     * @param newTime The new time limit for the restarted game
+     */
     public void reset(int newTime) {
         score = 0;
         timeLeft = newTime;
-        lastUpdateTime = System.currentTimeMillis();
+        lastUpdateTime = System.currentTimeMillis(); // Reset the timer to current time
     }
 
-    public int getScore() { return score; }
+    /**
+     * Retrieves the player's current score.
+     *
+     * @return The current score
+     */
+    public int getScore() {
+        return score;
+    }
 
-    public int getGroundY() { return groundY; }
-
+    /**
+     * Retrieves the Y-coordinate of the ground level.
+     * Ensures the player stays positioned correctly on the ground.
+     *
+     * @return The Y-position of the ground
+     */
+    public int getGroundY() {
+        return groundY;
+    }
 }
